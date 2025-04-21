@@ -25,7 +25,16 @@ export default async function registerAction(formData: FormData) {
     }
 
     //Se um usuario ja existe, retorna um erro
+    const user = await db.user.findUnique({
+        where: {
+            email: data.email,
+        }
+    })
 
+
+    if (user) {
+        throw new Error ('O usuario já existe')
+    }
 
 
     //Se não existir, retorna criar um usuario
